@@ -10,7 +10,7 @@ class AppTheme {
           seedColor: _primary,
           secondary: _secondary,
         ),
-        cardTheme: const CardTheme(
+        cardTheme: const CardThemeData(
           elevation: 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16)),

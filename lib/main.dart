@@ -11,11 +11,21 @@ import 'features/notifications/presentation/bloc/notification_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  // Firebase requires google-services.json (Android) / GoogleService-Info.plist (iOS).
+  // Gracefully skip if not yet configured so the app still runs during development.
+  bool firebaseReady = false;
+  try {
+    await Firebase.initializeApp();
+    firebaseReady = true;
+  } catch (_) {
+    debugPrint('[SmartGate] Firebase not configured — push notifications disabled.');
+  }
+
   await configureDependencies();
 
-  // Start FCM listener and feed incoming messages into the NotificationBloc.
-  await FcmService.instance.init(sl());
+  if (firebaseReady) {
+    await FcmService.instance.init(sl());
+  }
 
   runApp(const SmartGateApp());
 }

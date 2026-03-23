@@ -20,7 +20,8 @@ class FcmService {
   FcmService._();
   static final FcmService instance = FcmService._();
 
-  final _messaging = FirebaseMessaging.instance;
+  // Lazy getter — only evaluated when init() is called, after Firebase.initializeApp().
+  FirebaseMessaging get _messaging => FirebaseMessaging.instance;
   final _localNotifications = FlutterLocalNotificationsPlugin();
 
   static const _channelId = 'smart_gate_alerts';
